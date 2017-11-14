@@ -1,7 +1,7 @@
 // ===== Mailer Middleware File =====
 
 var mailObj =                       {},
-    // nodemailer =                    require('nodemailer'),
+    nodemailer =                    require('nodemailer'),
     data =                          require('./data/data.js');
 
 var smtpTransport =                 nodemailer.createTransport({

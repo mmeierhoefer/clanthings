@@ -11,7 +11,8 @@ var express =               require('express'),
     passport =              require("passport"),
     LocalStrategy =         require("passport-local").Strategy,
     crypto =                require('crypto'),
-    User =                  require('./models/user.js');
+    data =                  require('./middleware/data/data'),
+    User =                  require('./models/userModel.js');
 
 passport.use(new LocalStrategy(function(username, password, done) {
   User.findOne({ username: username.toLowerCase() }, function(err, user) {
@@ -38,8 +39,8 @@ passport.deserializeUser(function(id, done) {
 });
 
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/awss_survey');
-mongoose.connect('mongodb://mp-user:greatscott2016@ds117869.mlab.com:17869/mwm-meal-planner');
+mongoose.connect('mongodb://' + data.mlUser + ':' + data.mlPass + '@ds040877.mlab.com:40877/clanthings');
+
 
 // ===== Middleware =====
 app.set('views', path.join(__dirname, 'views'));
@@ -79,17 +80,17 @@ app.use(function(req, res, next){
 
 // ===== Route Variables =====
 var indexRoutes =       require("./routes/index.js"),
-    dashboardRoutes =   require("./routes/dashboard.js"),
-    reactRoutes =       require("./routes/react.js"),
-    surveyRoutes =      require("./routes/survey.js"),
+    // recipeRoutes =   require("./routes/recipe.js"),
+    // reactRoutes =       require("./routes/react.js"),
+    // surveyRoutes =      require("./routes/survey.js"),
     assetRoutes =       require("./routes/asset.js");
 
 app.use(indexRoutes);
-app.use(dashboardRoutes);
-app.use(reactRoutes);
-app.use(surveyRoutes);
+// app.use(dashboardRoutes);
+// app.use(reactRoutes);
+// app.use(surveyRoutes);
 app.use(assetRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function() {
+app.listen(process.env.PORT || 6969, process.env.IP, function() {
     console.log("Server started");
 });

@@ -1,15 +1,14 @@
 var express =                       require("express"),
     app =                           express(),
-    // aaa =                           require("../middleware/aaa.js"),
+    aaa =                           require("../middleware/aaa.js"),
     mail =                          require("../middleware/mail.js"),
-    iQ =                            require('../middleware/iQ.js'),
     router =                        express.Router({mergeParams: true}),
     passport =                      require("passport"),
     async =                         require('async'),
     crypto =                        require('crypto'),
-    // nodemailer =                    require('nodemailer'),
+    nodemailer =                    require('nodemailer'),
     data =                          require('../middleware/data/data.js'),
-    User =                          require("../models/user.js"),
+    User =                          require("../models/userModel.js"),
     owasp =                         require('owasp-password-strength-test');
 
 var route = {
@@ -18,7 +17,7 @@ var route = {
 // ===== Root Route =====
 router.get("/", function(req, res) {
     // console.log(user);
-    res.render("index", {
+    res.render("landing", {
         user: req.user
     });
 });
@@ -35,24 +34,9 @@ var username;
 var records = {};
 router.get("/register", function(req, res){
     username = req.query.username;
-    var params = iQ.preRegParams;
-        params.query = "{'7'.EX.'" + username + "'}";
-    iQ.quickbase.api('API_DoQuery', params, function(err, result) {
-        if(err) {
-          req.flash('error', err);
-        } else {
-          records = result.table.records;
-          if(records.length === 1) {
-              res.render("register", {
-                  username: username, 
-                  records: records,
-                  route: route
-                });
-          } else {
-              req.flash('error', username + ' is not on the list of authorized accounts.  Please contact GNCI at (949) 151-1960 for assistance.');
-              res.redirect("back");
-            }
-        }
+    res.render("register", {
+        username: username, 
+        route: route
     });
 });
 
