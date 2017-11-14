@@ -1,0 +1,22 @@
+<% include partials/header %>
+
+<div class="container">
+    <div class="row">
+            <h1 style="text-align: center">Login to AWSS Survey Results</h1>
+            <p style="text-align: center">Please enter your email address and password to access your Site Survey results</p>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="email" name="username" placeholder="email address" autofocus>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="password">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-md btn-primary btn-block"><strong>Login</strong></button>
+                    <a href="/forgot" ><strong>Forgot Password</strong></a>
+                </div>    
+            </form>
+    </div>
+</div>
+
+<% include partials/footer %>

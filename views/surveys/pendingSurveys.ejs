@@ -1,0 +1,60 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <form class="form-inline pull-right" action="surveys" method="GET">
+            <input style="width: 300px" type="search" class="form-control" placeholder="Search all <%= currentUser.company %> surveys" name="search">
+        </form>
+        <h1 style="display: inline"><%= currentUser.company %> Pending Surveys</h1>
+            <p>There are <%= records.length %> pending surveys for <%= currentUser.company %>.  Filter these surveys with the small Search box.</p>
+        <script>
+                $(document).ready(function() {
+                    $('#surveyTable').DataTable( {
+                        "data": <%- JSON.stringify(records) %>,
+                        "pageLength": 25,
+                        "processing": true,
+                        "columns": [
+                            { "data": "rid", defaultContent: "" ,
+                                "render": function(data) {
+                                    return '<a href="/surveys/'+data+'">Details</a>';
+                            }},
+                            { "data": "202", defaultContent: "" },
+                            { "data":  "48", defaultContent: "" },
+                            { "data": "529", defaultContent: "" },
+                            { "data": "147", defaultContent: "",
+                                "render": function(data){
+                                    if(data) {
+                                        return(moment(data).format('M-D-YYYY'));
+                                    }
+                            }},
+                            { "data": "173", defaultContent: "",
+                                "render": function ( data, type, full, meta ) {
+                                      return type === 'display' && data.length > 40 ?
+                                        '<span title="'+data+'">'+data.substr( 0, 38 )+'...</span>' :
+                                        data;
+                            }},
+                            { "data": "175", defaultContent: "" }
+                        ],
+                    } );
+                } );
+            </script>
+        <div class='container' id="bg">    
+            <table id="surveyTable" class="table table-hover table-condensed display">
+                <thead>
+                    <tr>
+                        <th>Details</th>
+                        <th>Client</th>
+                        <th>Survey ID</th>
+                        <th>Requested By</th>
+                        <th>Tentatively<br>Scheduled</th>
+                        <th>Site</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>    
+</div>
+
+<% include ../partials/footer %>
+

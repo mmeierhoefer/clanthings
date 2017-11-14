@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>iQ Portal </title>  
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <link rel='icon' type='image' href='images/gnci.ico'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/plug-ins/1.10.13/sorting/datetime-moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand navbar-left" href="/">
+                        <img alt="GNCI" src="/images/logo-noText.png">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <% if(currentUser) { %>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Surveys<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/surveys">Completed</a></li>
+                                    <li><a href="/pendingSurveys">Pending</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Assets<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href='/assets'>Shipments</a></li>
+                                    <li><a href='/pendingOrders'>Pending Orders</a></li>
+                                    <li><a href='/pendingReturns'>Pending Returns</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/tickets">React Support</a></li>
+                        </ul>
+                    <% } %>
+                    <ul class="navbar-nav navbar-right nav">
+                        <% if(!currentUser) { %>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/preRegister">Sign Up</a></li>
+                        <%} else { %>
+                            <li><a href="#">Signed in as: <%= currentUser.name %></a></li>
+                            <li><a href="/logout">Sign Out</a></li>
+                        <% } %> 
+                    </ul>
+                </div>
+            </div>    
+        </nav>
+
+        <div class="container">
+            <% if(error && error.length > 0){ %>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
+            <% } %>
+            <% if(success && success.length > 0){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= success %>
+                </div>
+            <% } %>
+            <% if(info && info.length > 0){ %>
+                <div class="alert alert-info" role="alert">
+                    <%= info %>
+                </div>
+            <% } %>
+        </div>
+        <!--Content goes here-->

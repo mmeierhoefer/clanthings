@@ -1,0 +1,89 @@
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) { ... }
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) { ... }
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) { ... }
+
+
+body {
+    background-image: url(http://www.publicdomainpictures.net/pictures/110000/velka/large-antenna.jpg);
+}
+
+#bg {
+    font-size: 0.8em;
+    background-color: #F0F1F7;
+}
+
+.bg {
+    font-size: 0.8em;
+    background-color: #F0F1F7;
+}
+
+.form-group {
+    width: 50%;
+    margin: 10px auto;
+}
+
+hr {
+    height: 2px;
+    background-color:#555;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    width: 75%;
+}
+
+#gnciIcon {
+    padding-top: 0;
+    margin-top: 0;
+}
+
+a.navbar-brand {
+    padding: 8px;
+}
+
+td.show {
+    text-align: center;
+}
+
+.dataTables_filter {
+    float: right;
+    padding: 5px;
+}
+
+.dataTables_length {
+    float: left;
+    padding: 5px;
+}
+
+.yellow {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc
+}
+
+.green {
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.red {
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+}
+
+.table-condensed.th {
+    vertical-align: bottom;
+}
+
+.dropdown-header {
+    font-size: 1.25em;
+    font-weight: 700;
+}

@@ -1,0 +1,76 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <form class="form-inline pull-right" action="assets" method="GET">
+            <input style="width: 300px" type="search" class="form-control" placeholder="Search all <%= currentUser.company %> shipments" name="search">
+        </form>
+        <h1 style="display: inline"><%= currentUser.company %> Pending Orders</h1>
+                <p>There are <%= pendingOrders.length %> pending orders for <%= currentUser.company %>.  Filter these assets with the small Search box.</p>
+            <script>
+                $(document).ready(function() {
+                    $('#assetTable').DataTable( {
+                        "data": <%- JSON.stringify(pendingOrders) %>,
+                        "pageLength": 25,
+                        "processing": true,
+                        "columns": [
+                            { "data": "rid", defaultContent: "" ,
+                                "render": function(data) {
+                                    return '<a href="/assets/'+data+'">Details</a>';
+                            }},
+                            { "data": "200", defaultContent: "" },
+                            { "data": "183", defaultContent: "",
+                                "render": function(data){
+                                    if(data) {
+                                        return(moment(data).format('M-D-YYYY'));
+                                    }
+                            }},
+                            { "data": "204", defaultContent: "",
+                                "render": function(data){
+                                    if(data.includes('Info ')) {
+                                        return('Info Change');
+                                    } if(data.includes('Support')){
+                                        return('Support');
+                                    } else {
+                                        return(data);
+                                    }
+                                }
+                            },
+                            { "data":  "43", defaultContent: "" },
+                            { "data": "743", defaultContent: "" },
+                            { "data": "364", defaultContent: "",
+                                "render": function ( data, type, full, meta ) {
+                                      return type === 'display' && data.length > 40 ?
+                                        '<span title="'+data+'">'+data.substr( 0, 38 )+'...</span>' :
+                                        data;
+                            }},
+                            { "data": "760", defaultContent: "" },
+                            { "data": "266", defaultContent: "" },
+                            { "data": "268", defaultContent: "" }
+                        ],
+                    } );
+                } );
+            </script>
+        <div class='container' id="bg">
+        <table id="assetTable" class="table table-hover table-condensed display">
+            <thead>
+                <tr>
+                    <th>Details</th>
+                    <th>Client</th>
+                    <th>Order<br>Date</th>
+                    <th>Order Type</th>
+                    <th>Reference</th>
+                    <th>Terminal</th>
+                    <th>Location</th>
+                    <th>Platform</th>
+                    <th>Carrier</th>
+                    <th>Mobile Number</th>
+                </tr>
+            </thead>
+        </table>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
+

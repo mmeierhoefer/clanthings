@@ -1,0 +1,54 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <h1>GNCI React Ticket <%= records[0][113] %></h1>
+</div>
+<div class="container" id="bg">
+    <div class="row">
+        <h3 style=" text-align: center">React Ticket Details for <%= records[0][566] %> location: <strong><%= records[0][513] %></strong></h3>
+        <h6 style=" text-align: center">Call taken on <%= moment(records[0][6]).format("dddd MMMM D, YYYY") %> at <%- moment(records[0][7]).format("H:mm a") %></h6>
+        <hr>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img class="responsive" src="<%= mapURL %>">
+                <div class="caption-full">
+                    <h5><%= records[0][513] %></h5>
+                    <p><%= records[0][545] %></p>
+                    <p>Tickets for this location: <%- records.length %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h4>Platform: <%= records[0][579] %></h4>
+                <table class="table table-condensedd">
+                    <tr>
+                        <td><%= records[0][512] %></td>
+                        <td style="text-align: right"><%= records[0][519] %></td>
+                    </tr>
+                    <% if(records[0][583]) { %>
+                    <tr>
+                        <td><%= records[0][584] %></td>
+                        <td style="text-align: right"><%= records[0][583] %></td>
+                    </tr>
+                    <% } %>
+                    <tr>
+                        <td><%= records[0][532] %></td>
+                        <td style="text-align: right"><%= records[0][538] %></td>
+                    </tr>
+                </table>
+            <h6><%= records[0][336] %></h6>
+        </div>
+        <div class="col-md-4">
+            <h4>Description of Service</h4>
+            <%- records[0][11] %>
+            <% if(records[0][336] === "Replace Hardware") { %>
+                <h6>Replace:</h6>
+                <p class="well"><%- records[0][460] %></p>
+            <% } %>
+        </div>
+  
+    </div>
+</div>    
+
+<!--<% include ../partials/footer %>-->
+

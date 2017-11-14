@@ -1,0 +1,155 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <h2>Survey <%= records[0][48] %><span style="float:right;"><%= records[0][202] %></span></h2>
+</div>
+<div class="container" id="bg">
+    <div class="row">
+        <div class='container'>
+            <h4 style=" text-align: center"><%= records[0][173] %></h4>
+            <% if(records[0][291]) { %>
+            <h6 style=" text-align: center">Completed on <%= moment(records[0][291]).format("dddd MMMM D, YYYY") %></h6>
+            <% } else { %>
+            <h6 style=" text-align: center">Tentatively Scheduled for <%= moment(records[0][147]).format("dddd MMMM D, YYYY") %></h6>
+            <% } %>
+        </div>
+        <hr>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img class="responsive" src="<%= mapURL %>">
+                <div class="caption-full">
+                    <h5><%= records[0][173] %></h5>
+                    <p><%= records[0][175] %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <% if(results[0]){ %>
+            <h4>Recommendations</h4>
+            <% if(records[0][329]) { %>
+                <p>
+                    Your site was tested using two hardware configurations:  Upgraded and Standard.<br>The <strong>Upgraded</strong> configuration includes the following additional equipment:  
+                    <ul>
+                    <% for(var i = 1; i < accessories.length; i++) { %>
+                        <li><%= accessories[i] %></li>
+                    <% } %>
+                    </ul>
+                    The <strong>Standard</strong> configuration tests the device with no additional accessories.  
+                </p>
+            <% } else { %>
+                <p>
+                    Your site was tested in the <strong>Standard</strong> configuration.  No upgraded accessories were used for this Survey.
+                </p>
+            <% } %>
+            <div class='well <%= wellBg %>' id='recommendation'>
+                <h5 style='text-align: center'><%= records[0][213] %></h5>
+                <% if(records[0][338] === 'Yes') { %>
+                    <h4 class='well' style='text-align: center'><%= records[0][228] %></h4>
+                    <h5 style='text-align: center'>Hardware Configuration (Upgraded)</h5>
+                    <ul>
+                    <% for(var i = 0; i < accessories.length; i++) { %>
+                        <li><strong><%= accessories[i] %></strong></li>
+                    <% } %>
+                    </ul>
+                <% } else { %>
+                    <h4 class='well' style='text-align: center'><%= records[0][228] %></h4>
+                    <span style='float: right'>Standard Configuration</span>
+                <% } %>
+            </div>
+                <p>
+                    This site performed best on the <strong><%= records[0][228] %></strong> network using the 
+                    <% if(records[0][338] === 'Yes') { %>
+                        <strong>Upgraded</strong>
+                    <% } else { %>
+                        <strong>Standard</strong>
+                    <% } %>
+                    configuration.  Survey metrics for the top result are summarized below:
+                </p>
+                <table class="table table-condensed">
+                    <tr>
+                        <% if(records[0][506]) { %><th>Download</th><% } %>
+                        <% if(records[0][507]) { %><th>Upload</th><% } %>
+                        <% if(records[0][651]) { %><th>Latency</th><% } %>
+                        <% if(records[0][652]) { %><th>Packets</th><% } %>
+                    </tr>
+                    <tr>
+                        <% if(records[0][506]) { %><td><%= records[0][506] %>Mb/s</td><% } %>
+                        <% if(records[0][507]) { %><td><%= records[0][507] %>Mb/s</td><% } %>
+                        <% if(records[0][651]) { %><td><%= records[0][651] %>ms</td><% } %>
+                        <% if(records[0][652]) { %><td><%= (100*(records[0][652])).toFixed(2) %>%</td><% } %>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4">
+            <h4>Device Location</h4>
+                <p><%= records[0][588] %></p>
+            <% if(records[0][111]){ %>
+            <h5>Review Notes</h5>
+                <p><%= records[0][111] %></p>
+            <% } %>
+        </div>
+        <% } else { %>
+        <h4>Survey Pending</h4>
+            <% if(records[0][329]) { %>
+                <p>Your site will be tested using two hardware configurations:  Upgraded and Standard.<br>The <strong>Upgraded</strong> configuration includes the following additional equipment:</p>
+                    <ul>
+                        <% for(var i = 1; i < accessories.length; i++) { %>
+                            <li><%= accessories[i] %></p>
+                        <% } %>
+                    </ul>
+                <p>The <strong>Standard</strong> configuration tests the device with no additional accessories.</p>
+            <% } else { %>
+                <p>
+                    Your site will be tested in the <strong>Standard</strong> configuration.  No upgraded accessories were used for this Survey.
+                </p>
+            <% } %>
+        <% } %>
+        
+    </div>
+    <% if(results[0]) { %>
+    <hr>
+    <div class='row'>
+        <div class='container'>
+            <h5>Survey Detail</h5>
+            <h6>Tested Accessories: <%= records[0][505] %></h6>
+            <table class="table table-condensed">
+                <tr>
+                    <th style='vertical-align: bottom'>Carrier</th>
+                    <th style='text-align: center; vertical-align: bottom'>Grade</th>
+                    <th style='text-align: center; vertical-align: bottom'>Technology</th>
+                    <th style='text-align: right; padding-right: 15px; vertical-align: bottom'>SQI</th>
+                    <th style='text-align: center; vertical-align: bottom'>RSSI<br>(dBm)</th>
+                    <th style='text-align: center; vertical-align: bottom'>SNR<br>(dBm)</th>
+                    <th style='text-align: center; vertical-align: bottom'>ECIO<br>(dB)</th>
+                    <% if(results[0][25]) { %><th style='text-align: center'>Download<br>(Mb/s)</th><% }%>
+                    <% if(results[0][28]) { %><th style='text-align: center'>Upload<br>(Mb/s)</th><% }%>
+                    <th style='text-align: center'>Latency<br>(ms)</th>
+                    <th style='text-align: right; vertical-align: bottom; padding-right: 18px'>Packets</th>
+                    <% if(records[0][329]) { %><th style='text-align: center'>Upgrade<br>Configuration</th><% } %>
+                    <% if(records[0][574]) { %><th style='text-align: center'>Alternate<br>Location</th><% } %>
+                </tr>
+                <% for(var i = 0; i < results.length; i++) { %>
+                    <tr>
+                        <td><%= results[i][33] %></td>
+                        <td style='text-align: center'><%= results[i][84] %></td>
+                        <td style='text-align: center'><%= results[i][95] %></td>
+                        <% if(results[i][8]) { %><td style='text-align: right; padding-right: 10px'><%= (100*(results[i][8])).toFixed(0) %>%</td><% } else { %><td></td><% } %>
+                        <td style='text-align: center'><%= results[i][11] %></td>
+                        <td style='text-align: center'><%= results[i][14] %></td>
+                        <td style='text-align: center'><%= results[i][17] %></td>
+                        <% if(results[i][25]) { %><td style='text-align: center'><%= results[i][25].toFixed(2) %></td><% } %>
+                        <% if(results[i][28]) { %><td style='text-align: center'><%= results[i][28].toFixed(2) %></td><% } %>
+                        <% if(results[i][20] > 0) { %><td style='text-align: center'><%= results[i][20] %></td><% } else { %><td></td><% } %>
+                        <% if(results[i][36]) { %><td style='text-align: right; padding-right: 15px'><%= (100*(results[i][36])).toFixed(2) %>%</td><% } else { %><td></td><% } %>
+                        <% if(records[0][329]) { %><% if(results[i][74] === 1) { %><td style='text-align: center'>Yes</td><% } else { %><td></td><% }} %>
+                        <% if(records[0][574]) { %><% if(results[i][122] === 1) { %><td style='text-align: center'>Yes</td><% } else { %><td></td><% }} %>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+    <% } %>
+</div>    
+
+<!--<% include ../partials/footer %>-->
+

@@ -1,0 +1,93 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <form class="form-inline pull-right" action="surveys" method="GET">
+            <input style="width: 300px" type="search" class="form-control" placeholder="Search all <%= currentUser.company %> surveys" name="search">
+        </form>
+        <h1 style="display: inline"><%= currentUser.company %> Surveys</h1>
+            <% if(!query) { %>
+                <p>The last <%= records.length %> surveys for <%= currentUser.company %>.  Filter these surveys with the small Search box.</p>
+            <% } else { %>
+                <p>There are <%= records.length %> surveys that contain the term "<%= query %>"</p>
+            <% } %>
+        <script>
+                $(document).ready(function() {
+                    $('#surveyTable').DataTable( {
+                        "data": <%- JSON.stringify(records) %>,
+                        "pageLength": 25,
+                        "processing": true,
+                        "columns": [
+                            { "data": "rid", defaultContent: "" ,
+                                "render": function(data) {
+                                    return '<a href="/surveys/'+data+'">Details</a>';
+                            }},
+                            { "data": "202", defaultContent: "" },
+                            { "data":  "48", defaultContent: "" },
+                            { "data": "529", defaultContent: "" },
+                            { "data": "291", defaultContent: "",
+                                "render": function(data){
+                                    if(data) {
+                                        return(moment(data).format('M-D-YYYY'));
+                                    }
+                            }},
+                            { "data": "173", defaultContent: "",
+                                "render": function ( data, type, full, meta ) {
+                                      return type === 'display' && data.length > 40 ?
+                                        '<span title="'+data+'">'+data.substr( 0, 38 )+'...</span>' :
+                                        data;
+                            }},
+                            // { "data": "175", defaultContent: "",
+                            //     "render": function ( data, type, full, meta ) {
+                            //           return type === 'display' && data.length > 40 ?
+                            //             '<span title="'+data+'">'+data.substr( 0, 38 )+'...</span>' :
+                            //             data;
+                            // }},
+                            { "data": "213", defaultContent: "" },
+                            { "data": "228", defaultContent: "" },
+                            { "data": "349", defaultContent: "" },
+                            { "data": "338", defaultContent: "" },
+                            { "data": "473", defaultContent: "" }
+                        ],
+                    } );
+                } );
+            </script>
+        <div class='container' id="bg">    
+        <table id="surveyTable" class="table table-hover table-condensed display">
+            <thead>
+                <tr>
+                    <th>Details</th>
+                    <th>Client</th>
+                    <th>Survey ID</th>
+                    <th>Requested By</th>
+                    <th>Completed</th>
+                    <th>Site</th>
+                    <th>Recommendations:</th>
+                    <th>Carrier</th>
+                    <th>Device</th>
+                    <th>Amplifier</th>
+                    <th>Antenna</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Details</th>
+                    <th>Client</th>
+                    <th>Survey ID</th>
+                    <th>Requested By</th>
+                    <th>Completed</th>
+                    <th>Site</th>
+                    <th>Recommendations:</th>
+                    <th>Carrier</th>
+                    <th>Device</th>
+                    <th>Amplifier</th>
+                    <th>Antenna</th>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+    </div>    
+</div>
+
+<% include ../partials/footer %>
+

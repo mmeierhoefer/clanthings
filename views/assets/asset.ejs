@@ -1,0 +1,196 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <h1><%= records[0][200] %> <%= records[0][204] %></h1>
+</div>
+<div class="container" id="bg">
+    <div class="row">
+        <h3 style=" text-align: center">Details for <strong><%= records[0][743] %></strong> at: <%= records[0][364] %></h3>
+        <hr>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img class="responsive" src="<%= mapURL %>">
+                <div class="caption-full">
+                    <h5><%= records[0][364] %></h5>
+                    <p><%= records[0][366] %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h5 style="text-align: center">Order Reference:  <%= records[0][43] %></h5>
+                <div class="col-md-6">
+                    <h5><%= records[0][743] %></h5>
+                </div>
+                <div class="col-md-6">
+                    <h5><%= records[0][340] %></h5>
+                </div>
+                <div class="col-md-4" style="margin-bottom: 20px">
+                   <% if(records[0][183]) { %>
+                       Ordered:
+                       <strong><%= moment(records[0][183]).format("M/D/YYYY") %></strong>
+                    <% } %>
+                </div>
+                <div class="col-md-4">
+                    <% if(records[0][184]) { %>
+                        Due:
+                        <strong><%= moment(records[0][184]).format("M/D/YYYY") %></strong>
+                    <% } %>
+                </div>    
+                <div class="col-md-4">
+                    <% if(records[0][33]) { %>
+                        Shipped:
+                        <strong><%= moment(records[0][33]).format("M/D/YYYY") %></strong>
+                    <% } %>    
+                </div>
+                <hr style="margin-top: 50px">
+                <% if(records[0][510] === "Shipped") { %>
+                    <h6>Shipped to:</h6>
+                    <p class="well"><%- records[0][677] %></p>
+                    <h6>Via:</h6>
+                    <p class="well">
+                        FedEx <%- records[0][599] %>
+                        <span style="float: right"><a href="<%- records[0][418] %>"><%- records[0][417] %></a></span>
+                    </p>
+                <% } %>
+            <table class="table table-condensed">
+                <tr>
+                    <% if(records[0][506]) { %><th>Download</th><% } %>
+                    <% if(records[0][507]) { %><th>Upload</th><% } %>
+                    <% if(records[0][651]) { %><th>Latency</th><% } %>
+                    <% if(records[0][652]) { %><th>Packets</th><% } %>
+                </tr>
+                <tr>
+                    <% if(records[0][506]) { %><td><%= records[0][506] %>Mb/s</td><% } %>
+                    <% if(records[0][507]) { %><td><%= records[0][507] %>Mb/s</td><% } %>
+                    <% if(records[0][651]) { %><td><%= records[0][651] %>ms</td><% } %>
+                    <% if(records[0][652]) { %><td><%= 100*(records[0][652]) %>%</td><% } %>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <% if(records[0][510] === 'Shipped') { %> <h4>Shipped Hardware</h4> <% }
+            else if(records[0][510] === 'Cancelled') { %> <h4>Cancelled Hardware</h4> <% }
+            else if(records[0][510] === 'Pending Return') { %> <h4>Hardware (Pending Return)</h4> <% }
+            else if(records[0][510] === 'Return') { %> <h4>Returned Hardware</h4> <% }
+            else if(records[0][510] === 'Info Change') { %> <h4>Hardware Information</h4>
+            <% } else { %> <h4>Hardware (Pending Shipment)</h4> <% } %>
+                <table class="table table-condensed">
+                    <tr>
+                        <th></th>
+                        <th>Device</th>
+                        <th>Part</th>
+                        <th>Serial</th>
+                    </tr>
+                    <tr>                                 <!--Primary Device-->
+                    <% if(records[0][142]) { %>
+                        <td><strong>Primary</strong></td>
+                        <td><%= records[0][423] %></td>
+                        <td><%= records[0][424] %></td>
+                        <td><%= records[0][142] %></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Aircard-->
+                    <% if(records[0][270]) { %>
+                        <td><strong>Aircard</strong></td>
+                        <td><%= records[0][435] %></td>
+                        <td><%= records[0][437] %></td>
+                        <td><%= records[0][270] %></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Mobile Number-->
+                    <% if(records[0][270]) { %>
+                        <td><strong>Mobile Number</strong></td>
+                        <td><%= records[0][268] %></td>
+                        <td><%= records[0][266] %></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Mobile Number2-->
+                    <% if(records[0][546]) { %>
+                        <td><strong>Mobile Number</strong></td>
+                        <td><%= records[0][549] %></td>
+                        <td><%= records[0][548] %></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+
+                    <tr>                                 <!--SIM-->
+                    <% if(records[0][273]) { %>
+                        <td><strong>SIM</strong></td>
+                        <td><%= records[0][273] %></td>
+                        <td></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--SIM2-->
+                    <% if(records[0][560]) { %>
+                        <td><strong>SIM</strong></td>
+                        <td><%= records[0][560] %></td>
+                        <td></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Client Hardware-->
+                    <% if(records[0][153]) { %>
+                        <td><strong>Router</strong></td>
+                        <td><%= records[0][438] %></td>
+                        <td><%= records[0][436] %></td>
+                        <td><%= records[0][153] %></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Amp-->
+                    <% if(records[0][173]) { %>
+                        <td><strong>Amplifier</strong></td>
+                        <td><%= records[0][431] %></td>
+                        <td><%= records[0][430] %></td>
+                        <td><%= records[0][173] %></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Antenna-->
+                    <% if(records[0][595]) { %>
+                        <td><strong>Antenna</strong></td>
+                        <td><%= records[0][596] %></td>
+                        <td><%= records[0][595] %></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Install Kit-->
+                    <% if(records[0][189]) { %>
+                        <td></td>
+                        <td>Installation & Mounting Kit</td>
+                        <td></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Adapter-->
+                    <% if(records[0][190]) { %>
+                        <td></td>
+                        <td>Antenna Cables and Adapters</td>
+                        <td></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Cat5-->
+                    <% if(records[0][181] || records[0][182]) { %>
+                        <td></td>
+                        <td>Cat5 Ethernet Cable</td>
+                        <td></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                    <tr>                                 <!--Legacy USB Cable-->
+                    <% if(records[0][180]) { %>
+                        <td></td>
+                        <td>Legacy USB Cable</td>
+                        <td></td>
+                        <td></td>
+                    <% } %>
+                    </tr>
+                </table>
+            <p><%= records[0][588] %></p>
+        </div>
+    </div>
+</div>    
+
+<!--<% include ../partials/footer %>-->
+

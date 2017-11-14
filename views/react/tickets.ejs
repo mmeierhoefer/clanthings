@@ -1,0 +1,71 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <form class="form-inline pull-right" action="tickets" method="GET">
+            <input style="width: 300px" type="search" class="form-control" placeholder="Search all <%= currentUser.company %> React Tickets" name="search">
+        </form>
+        <h1 style="display: inline"><%= currentUser.company %> React Tickets</h1>
+            <% if(!query) { %>
+                <p>The last <%= records.length %> support tickets for <%= currentUser.company %>.  Filter these tickets with the small Search box.</p>
+            <% } else { %>
+                <p>There are <%= records.length %> tickets that contain the term "<%= query %>"</p>
+            <% } %>
+       <script>
+                $(document).ready(function() {
+                    $('#ticketTable').DataTable( {
+                        "data": <%- JSON.stringify(records) %>,
+                        "pageLength": 25,
+                        "processing": true,
+                        "columns": [
+                            { "data": "rid", defaultContent: "" ,
+                                "render": function(data) {
+                                    return '<a href="/tickets/'+data+'">Details</a>';
+                            }},
+                            { "data": "511", defaultContent: "" },
+                            { "data": "113", defaultContent: "" },
+                            { "data":   "6", defaultContent: "",
+                                "render": function(data) {
+                                    return(moment(data).format("M-D-YYYY"));
+                                }},
+                            { "data": "566", defaultContent: "" },
+                            { "data": "513", defaultContent: "" },
+                            { "data": "579", defaultContent: "" },
+                            { "data": "336", defaultContent: "" }
+                        ],
+                    } );
+                } );
+            </script>            
+            <div id='bg' class='container'>
+                <table  id="ticketTable" class="table table-hover table-condensed display">
+                    <thead>
+                        <tr>
+                            <th>Details</th>
+                            <th>Client</th>
+                            <th>Ticket</th>
+                            <th>Date</th>
+                            <th>Terminal</th>
+                            <th>Location</th>
+                            <th>Platform</th>
+                            <th>Resolution</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Details</th>
+                            <th>Client</th>
+                            <th>Ticket</th>
+                            <th>Date</th>
+                            <th>Terminal</th>
+                            <th>Location</th>
+                            <th>Platform</th>
+                            <th>Resolution</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
+
