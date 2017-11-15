@@ -4,6 +4,7 @@ var express =           require("express"),
     aaa =               require("../middleware/aaa.js"),
     gMaps =             require("../middleware/gMaps.js"),
     Asset =             require('../models/assetModel'),
+    Site =              require('../models/siteModel'),
     moment =            require("moment");
     
 
@@ -16,10 +17,17 @@ router.get("/assets", /*aaa.isLoggedIn,*/ function(req, res){
     route.name = 'assets';
     route.REST = 'index';
     var query = req.query.search;
-    res.render("assets/indexAsset", {
-        query: query,
-        moment: moment,
-        route: route
+    Asset.find({}, function(err, allAssets){
+        if(err) {
+            req.flash('error', 'You got some sort of error: ' + err);
+        } else {
+            res.render("assets/indexAsset", {
+                assets: allAssets,
+                query: query,
+                moment: moment,
+                route: route
+            });
+        }
     });
 });
 
@@ -63,16 +71,41 @@ router.post('/assets', function(req, res){
 router.get("/assets/:assetID", /*aaa.isLoggedIn,*/ function(req, res) {
     route.name = 'assets';
     route.REST = 'show';
-    var rid = req.params.assetID;
-    // var params = gMaps.params;
-    // params.center = records[0][366];
-    // params.markers[0].location = records[0][366];
-    // var mapURL = gMaps.gmAPI.staticMap(params);
-    res.render("assets/asset", {
-        // mapURL: mapURL, 
-        moment: moment,
-        route: route
+    Asset.findById(req.params.assetID, function(err, foundAsset){
+        res.render("assets/showAsset", {
+            asset: foundAsset
+        });
     });
 });
+
+// ===== Edit & Update Routes =====
+router.get("/assets/:assetID/edit", /*middleware.checkCampgroundOwnership,*/ function(req, res) {
+    Asset.findById(req.params.assetID, function(err, foundAsset){
+        res.render("assets/editAsset", {
+            asset: foundAsset
+        });
+    });
+});
+router.put("/assets/:assetID", /*middleware.checkCampgroundOwnership,*/ function(req, res) {
+    Asset.findByIdAndUpdate(req.params.assetID, req.body.asset, function(err, updatedAsset){
+        if(err){
+            req.flash('error', 'You got some sort of error: ' + err);
+        } else {
+        res.redirect("/assets/" + req.params.assetID);
+        }
+    });
+});
+
+// ===== Destroy Route =====
+router.delete("/assets/:assetID", /*middleware.checkCampgroundOwnership,*/ function(req, res) {
+    Asset.findByIdAndRemove(req.params.assetID, function(err) {
+        if(err){
+            req.flash('error', 'You got some sort of error: ' + err);
+        } else {
+        res.redirect("/assets");
+        }
+    });
+});
+
 
 module.exports = router; 

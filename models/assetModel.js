@@ -26,6 +26,32 @@ var assetSchema = new mongoose.Schema({
     assetType: {
         type: String,
         required: true
+    },
+    locationPerm: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Site"
+        },
+        name: String,
+        address_1: String,
+        address_2: String,
+        city: String,
+        state: String,
+        zip: String,
+        country: String
+    },
+    locationCurrent: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Site"
+        },
+        name: String,
+        address_1: String,
+        address_2: String,
+        city: String,
+        state: String,
+        zip: String,
+        country: String
     }
 });
 module.exports = mongoose.model("Asset", assetSchema);
