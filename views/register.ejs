@@ -2,14 +2,16 @@
 
 <div class="container">
     <div class="row">
-            <h1 style="text-align: center">GNCI Site Survey Results Registration</h1>
+            <h1 style="text-align: center">clanThings Registration</h1>
             <form action="/register" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" value="<%= records[0][6] %>" readonly>
-                    <input class="form-control" type="text" name="company" value="<%= records[0][8] %>" readonly>
-                    <input class="form-control" type="email" name="username" value="<%= username %>" readonly>
-                    <input class="form-control" type="password" name="password" placeholder="Password">
-                    <input class="form-control" type="password" name="confirm" placeholder="Confirm Password">
+                    <input class="form-control" type="text" name="screenName" placeholder="Sreen Name" required>
+                    <input class="form-control" type="text" name="firstName" placeholder="First Name" required>
+                    <input class="form-control" type="text" name="lastName" placeholder="Last Name" required>
+                    <input class="form-control" type="email" name="username" placeholder="Email Address" required>
+                    <input class="form-control" type="tel" name="mobile" placeholder="Mobile Number" required>
+                    <input class="form-control" type="password" name="password" placeholder="Password" required>
+                    <input class="form-control" type="password" name="confirm" placeholder="Confirm Password" required>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-md btn-primary btn-block">Register</button>

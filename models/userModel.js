@@ -14,11 +14,10 @@ var userSchema = new mongoose.Schema({
         type:               String,
         required:           true,
     },
-    company:                String,
-    name:                   String,
-    survey:                 Boolean,
-    react:                  Boolean,
-    asset:                  Boolean,
+    screenName:             String,
+    firstName:              String,
+    lastName:               String,
+    mobile:                 String,
     resetPasswordToken:     String,
     resetPasswordExpires:   Date
 });

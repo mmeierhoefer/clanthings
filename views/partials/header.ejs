@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>iQ Portal </title>  
+        <title>clanThings</title>  
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
@@ -31,29 +31,29 @@
                     <% if(currentUser) { %>
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Surveys<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recipes<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/surveys">Completed</a></li>
-                                    <li><a href="/pendingSurveys">Pending</a></li>
+                                    <li><a href="/">Completed</a></li>
+                                    <li><a href="/">Pending</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Assets<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href='/assets'>Shipments</a></li>
-                                    <li><a href='/pendingOrders'>Pending Orders</a></li>
-                                    <li><a href='/pendingReturns'>Pending Returns</a></li>
+                                    <li><a href='/assets/new'>New Asset</a></li>
+                                    <li><a href='/'>Pending Orders</a></li>
+                                    <li><a href='/'>Pending Returns</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/tickets">React Support</a></li>
+                            <li><a href="/locations">Locations</a></li>
                         </ul>
                     <% } %>
                     <ul class="navbar-nav navbar-right nav">
                         <% if(!currentUser) { %>
                             <li><a href="/login">Login</a></li>
-                            <li><a href="/preRegister">Sign Up</a></li>
+                            <li><a href="/register">Sign Up</a></li>
                         <%} else { %>
-                            <li><a href="#">Signed in as: <%= currentUser.name %></a></li>
+                            <li><a href="#">Signed in as: <%= currentUser.screenName %></a></li>
                             <li><a href="/logout">Sign Out</a></li>
                         <% } %> 
                     </ul>

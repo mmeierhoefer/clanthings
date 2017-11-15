@@ -80,14 +80,14 @@ app.use(function(req, res, next){
 
 // ===== Route Variables =====
 var indexRoutes =       require("./routes/index.js"),
-    // recipeRoutes =   require("./routes/recipe.js"),
-    // reactRoutes =       require("./routes/react.js"),
+    recipeRoutes =   require("./routes/recipe.js"),
+    // commentRoutes =       require("./routes/comments.js"),
     // surveyRoutes =      require("./routes/survey.js"),
     assetRoutes =       require("./routes/asset.js");
 
 app.use(indexRoutes);
-// app.use(dashboardRoutes);
-// app.use(reactRoutes);
+app.use(recipeRoutes);
+// app.use(commentRoutes);
 // app.use(surveyRoutes);
 app.use(assetRoutes);
 

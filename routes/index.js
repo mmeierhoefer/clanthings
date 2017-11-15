@@ -9,6 +9,7 @@ var express =                       require("express"),
     nodemailer =                    require('nodemailer'),
     data =                          require('../middleware/data/data.js'),
     User =                          require("../models/userModel.js"),
+    Site =                          require('../models/siteModel.js'),
     owasp =                         require('owasp-password-strength-test');
 
 var route = {
@@ -24,34 +25,23 @@ router.get("/", function(req, res) {
 
 // ===== Authentication Routes =====
 
-// Pre-Register - get email address for compare to extUsers table in Access
-router.get("/preRegister", function(req, res){
-   res.render("preRegister", {
-        user: req.user
-    }); 
-});
-var username;
-var records = {};
+// Registration logic
 router.get("/register", function(req, res){
-    username = req.query.username;
+  username = req.query.username;
     res.render("register", {
-        username: username, 
-        route: route
+      route: route
     });
 });
 
-
-// Registration logic
 router.post("/register", function(req, res){
     var user = new User({
         username: (req.body.username).toLowerCase(),
         password: req.body.password,
         confirm: req.body.confirm,
-        name: req.body.name,
-        company: req.body.company,
-        survey: req.body.survey,
-        react: req.body.react,
-        asset: req.body.asset
+        screenName: req.body.screenName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        mobile: req.body.mobile
     });
     // Hardened password piece
     owasp.config({
@@ -70,7 +60,7 @@ router.post("/register", function(req, res){
       } else {
     user.save(function(err) {
         req.logIn(user, function(err) {
-            res.redirect('/surveys');
+            res.redirect('/assets');
         });
     })};
 });
@@ -233,5 +223,34 @@ router.get("/logout", function(req, res){
    res.redirect("/");
 });
 
+//  Location
+router.get("/location", function(req, res){
+  username = req.query.username;
+    res.render("locations/newSite", {
+      route: route
+    });
+});
+
+router.post("/location", function(req, res){
+  var site = new Site({
+      name: req.body.name,
+      address_1: req.body.address_1,
+      address_2: req.body.address_2,
+      city: req.body.city,
+      state: req.body.state,
+      zip: req.body.zip,
+      country: req.body.country,
+      retired: req.body.retired,
+      retiredReason: req.body.retiredReason
+  });
+  Site.create(site, function(err, newlyCreated){
+    if(err){
+      console.log(err);
+      req.flash('error', 'You got some sort of error: ' + err);
+    } else {
+      res.redirect('/location');
+    }
+  })
+});
 
 module.exports = router; 

@@ -3,7 +3,6 @@ var express =           require("express"),
     router =            express.Router({mergeParams: true}),
     aaa =               require("../middleware/aaa.js"),
     gMaps =             require("../middleware/gMaps.js"),
-    iQ =                require('../middleware/iQ.js'),
     moment =            require("moment");
     
 

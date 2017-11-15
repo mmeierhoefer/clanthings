@@ -3,42 +3,61 @@ var express =           require("express"),
     router =            express.Router({mergeParams: true}),
     aaa =               require("../middleware/aaa.js"),
     gMaps =             require("../middleware/gMaps.js"),
+    Asset =             require('../models/assetModel'),
     moment =            require("moment");
     
 
 // ===== Index Route =====
-// Currently displays the last 250 asset records - no filters other than 
 var route = {
     module: 'Assets',
 };
-var records;
-var query;
 
 router.get("/assets", /*aaa.isLoggedIn,*/ function(req, res){
     route.name = 'assets';
     route.REST = 'index';
-    query = req.query.search;
-    res.render("assets/assets", {
-        records: records,
+    var query = req.query.search;
+    res.render("assets/indexAsset", {
         query: query,
         moment: moment,
         route: route
     });
+});
 
-    // function search1(userCo, query1) {
-    //     if(req.user.company != 'GNCI') { 
-    //         userCo = "{'200'.SW.'" + req.user.company + "'}";
-    //     } if (query) {
-    //         query1 = "{'a'.CT.'" + query + "'}";
-    //     } if(userCo && query1) {
-    //         return(userCo + " AND " + query1);
-    //     } if(userCo && !query1){
-    //         return(userCo);
-    //     } if(!userCo && query1){
-    //         return(query1);
-    //     }
-    // }
-});    
+router.get("/assets/new", /*aaa.isLoggedIn,*/ function(req, res){
+    route.name = 'assets';
+    route.REST = 'index';
+    var query = req.query.search;
+    res.render("assets/newAsset", {
+        query: query,
+        moment: moment,
+        route: route
+    });
+});
+
+router.post('/assets', function(req, res){
+    var title = req.body.title,
+        owner = {
+            id: req.user._id,
+            username: req.user.username
+        },
+        image = req.body.image,
+        description = req.body.description,
+        assetType = req.body.assetType;
+    var newAsset = {
+        title: title,
+        owner: owner,
+        image: image,
+        description: description,
+        assetType: assetType
+    }
+    Asset.create(newAsset, function(err, newlyCreated){
+        if(err){
+            req.flash('error', 'You got some sort of error: ' + err);
+        } else {
+            res.redirect('/assets');
+        }
+    })
+})
 
 // ===== Show Route =====
 router.get("/assets/:assetID", /*aaa.isLoggedIn,*/ function(req, res) {
@@ -53,23 +72,6 @@ router.get("/assets/:assetID", /*aaa.isLoggedIn,*/ function(req, res) {
         // mapURL: mapURL, 
         moment: moment,
         route: route
-    });
-});
-
-router.get("/pendingOrders", /*aaa.isLoggedIn,*/ function(req, res) {
-    route.name = 'pendingOrders';
-    res.render('assets/pendingOrders', {
-        route: route,
-        moment: moment
-    });
-});
-
-router.get("/pendingReturns", /*aaa.isLoggedIn,*/ function(req, res) {
-    route.name = 'pendingReturns';
-    res.render('assets/pendingReturns', {
-        pendingReturns: pendingReturns,
-        route: route,
-        moment: moment
     });
 });
 
